@@ -3,6 +3,7 @@ import { model, Schema } from 'mongoose'
 interface Account {
     username: string
     password: string
+    
 }
 
 const accountSchema = new Schema<Account>({
@@ -15,6 +16,7 @@ const accountSchema = new Schema<Account>({
         type: String,
         required: true,
     },
+   
 })
 
 const AccountModel = model('Account', accountSchema)
