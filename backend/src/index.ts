@@ -65,7 +65,6 @@ io.on('connection', (socket) => {
     socket.on('join controller room', (message) => {
         socket.join(message)
     })
-    console.log(socket)
 
     // socket.on('join client room', () => {
     //     socket.join('client room')
