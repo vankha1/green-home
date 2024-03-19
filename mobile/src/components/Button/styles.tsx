@@ -14,6 +14,15 @@ const styles = StyleSheet.create({
     onPress: {
         backgroundColor: COLORS.secondary
     },
+
+    addBtn: {
+        width: 45,
+        height: 45,
+        borderRadius: 50,
+        backgroundColor: COLORS.buttonBg,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
 })
 
 export default styles
