@@ -5,6 +5,7 @@ import { useState } from "react";
 interface ButtonProps {
   children: JSX.Element | JSX.Element[];
   isLogin: boolean;
+  addBtn?: boolean;
   onPress?: () => void;
 }
 
@@ -21,6 +22,7 @@ const Button = (props: ButtonProps) => {
         styles.container,
         props.isLogin ? styles.containerLogin : null,
         pressed ? styles.onPress : null,
+        props.addBtn ? styles.addBtn : null,
       ]}
     >
       {props.children}

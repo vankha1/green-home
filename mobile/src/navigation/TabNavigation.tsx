@@ -7,7 +7,7 @@ import SettingScreen from "../screens/Setting/SettingScreen";
 import { AppTabParamList, HomeStackParamList } from "../utils/navigator";
 import HomeScreen from "../screens/Home/HomeScreen";
 import { COLORS, icons } from "../constants";
-import HeaderButton from "../components/Header/HeaderButton/HeaderButton";
+import { Image, TouchableOpacity } from "react-native";
 
 const Tab = createBottomTabNavigator<AppTabParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
@@ -21,15 +21,16 @@ const HomeStackCmp = ({
       screenOptions={{
         headerStyle: { backgroundColor: COLORS.mainBackground},
         headerShadowVisible: false,
-        headerShown: true,
-        // headerLeft: () => (
-        //   <HeaderButton
-        //     iconUrl={icons.left}
-        //     dimension="60%"
-        //     handlePress={() => navigation.goBack()}
-        //   />
-        // ),
-        headerTitle: ""
+        headerShown: false,
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image
+              source={icons.left}
+              style={{ width: 30, height: 30, marginRight: 10 }}
+            />
+          </TouchableOpacity>
+        ),
+        headerTitle: "Home page"
       }}
     >
       {/* name attribute here must match with HomeStackParamList */}

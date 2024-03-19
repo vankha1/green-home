@@ -1,24 +1,36 @@
 import { StyleSheet } from 'react-native'
+import { COLORS } from '../../constants'
 
 const styles = StyleSheet.create({
     container: {
-        width: '85%',
+        width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: 25,
+        marginTop: 80,
     },
     header: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        gap: 10,
+        marginTop: 25,
     },
     icon: {
-        width: 40,
-        height: 40,
+        width: 30,
+        height: 30,
         borderRadius: 50,
-        backgroundColor: 'black',
     },
     title: {
-        fontSize: 22,
+        fontSize: 25,
+        fontWeight: 'bold',
     },
+    greeting: {
+        color: COLORS.gray,
+        fontSize: 16,
+    },
+    buttonWrapper: {
+        alignSelf: 'flex-end'
+    }
 })
 
 
