@@ -10,6 +10,7 @@ import StatisticScreen from "../screens/Statistic/StatisticScreen";
 import { AppTabParamList, HomeStackParamList } from "../utils/navigator";
 import HomeScreen from "../screens/Home/HomeScreen";
 import { COLORS, icons } from "../constants";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator<AppTabParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
@@ -17,11 +18,11 @@ const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 const HomeStackCmp = ({
   navigation,
 }: BottomTabScreenProps<AppTabParamList, "HomeStack">): JSX.Element => {
-    // <AppTabParamList, "Home"> Home here must match with AppTabParamList and name attribute of Tab.Screen below
+  // <AppTabParamList, "Home"> Home here must match with AppTabParamList and name attribute of Tab.Screen below
   return (
     <HomeStack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: COLORS.mainBackground},
+        headerStyle: { backgroundColor: COLORS.mainBackground },
         headerShadowVisible: false,
         headerShown: false,
         headerLeft: () => (
@@ -32,7 +33,7 @@ const HomeStackCmp = ({
             />
           </TouchableOpacity>
         ),
-        headerTitle: "Home page"
+        headerTitle: "Home page",
       }}
     >
       {/* name attribute here must match with HomeStackParamList */}
@@ -42,17 +43,53 @@ const HomeStackCmp = ({
 };
 
 function TabNavigator() {
-    return (
-        <Tab.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            <Tab.Screen name="HomeStack" component={HomeStackCmp} />
-            <Tab.Screen name="Statistic" component={StatisticScreen} />
-            <Tab.Screen name="Setting" component={SettingScreen} />
-        </Tab.Navigator>
-    );
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Tab.Screen
+        name="HomeStack"
+        component={HomeStackCmp}
+        options={{
+          title: "Home",
+          tabBarIcon: () => {
+            return <MaterialCommunityIcons name="home" size={30} />;
+          },
+          tabBarLabelStyle: {
+            fontSize: 15,
+            color: COLORS.secondary
+          },
+          tabBarActiveBackgroundColor: COLORS.buttonBg,
+        }}
+      />
+      <Tab.Screen name="Statistic" component={StatisticScreen} options={{
+          title: "Statistic",
+          tabBarIcon: () => {
+            return <MaterialCommunityIcons name="chart-line" size={30} />;
+          },
+          tabBarLabelStyle: {
+            fontSize: 15,
+            color: COLORS.secondary
+          },
+          tabBarActiveBackgroundColor: COLORS.buttonBg,
+          tabBarActiveTintColor: COLORS.buttonBg,
+        }}/>
+      <Tab.Screen name="Setting" component={SettingScreen} options={{
+          title: "Setting",
+          tabBarIcon: () => {
+            return <MaterialCommunityIcons name="account" size={30} />;
+          },
+          tabBarLabelStyle: {
+            fontSize: 15,
+            color: COLORS.secondary
+          },
+          tabBarActiveBackgroundColor: COLORS.buttonBg,
+          tabBarActiveTintColor: COLORS.buttonBg,
+        }}/>
+    </Tab.Navigator>
+  );
 }
 
 export default TabNavigator;
