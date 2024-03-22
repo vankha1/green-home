@@ -2,12 +2,14 @@ import {
   BottomTabScreenProps,
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs";
+import { Image, TouchableOpacity } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import SettingScreen from "../screens/Setting/SettingScreen";
+import StatisticScreen from "../screens/Statistic/StatisticScreen";
 import { AppTabParamList, HomeStackParamList } from "../utils/navigator";
 import HomeScreen from "../screens/Home/HomeScreen";
 import { COLORS, icons } from "../constants";
-import { Image, TouchableOpacity } from "react-native";
 
 const Tab = createBottomTabNavigator<AppTabParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
@@ -47,6 +49,7 @@ function TabNavigator() {
             }}
         >
             <Tab.Screen name="HomeStack" component={HomeStackCmp} />
+            <Tab.Screen name="Statistic" component={StatisticScreen} />
             <Tab.Screen name="Setting" component={SettingScreen} />
         </Tab.Navigator>
     );
