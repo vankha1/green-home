@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import {View, Switch} from 'react-native';
-const ToggleSwitch = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
+
+
+const ToggleSwitch = ({deviceState=false}) => {
+  const [isEnabled, setIsEnabled] = useState(deviceState);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   return (
