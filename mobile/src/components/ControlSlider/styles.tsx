@@ -6,8 +6,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFEFE',
         alignSelf: 'center',
         marginTop: 20,
-        paddingTop:30,
-        paddingBottom:30,
+        paddingTop:25,
+        paddingBottom:25,
         paddingLeft:40,
         paddingRight:40,
         flexDirection: 'column',
@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
     },
     topContent:{
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: 10,
     },
     info:{
     },
