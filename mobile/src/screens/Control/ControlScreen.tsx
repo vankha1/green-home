@@ -1,6 +1,6 @@
-import {FlatList, Image, Text,TouchableOpacity} from "react-native";
+import { FlatList, Image, Text, TouchableOpacity } from "react-native";
 import styles from "./styles";
-import {  View, } from "react-native"
+import { View } from "react-native";
 import Header from "../../components/Header/Header";
 import ControlCard from "../../components/ControlCard/ControlCard";
 import ControlSlider from "../../components/ControlSlider/ControlSlider";
@@ -61,9 +61,13 @@ const data0: ControlSliderType[] = [
 ];
 
 const ControlScreen = () => {
-  const navigation = useNavigation()
-  const renderItem = ({ item }: { item: ControlCardType | ControlSliderType }) => {
-    if ('state' in item) {
+  const navigation = useNavigation();
+  const renderItem = ({
+    item,
+  }: {
+    item: ControlCardType | ControlSliderType;
+  }) => {
+    if ("state" in item) {
       return (
         <ControlCard
           deviceName={item.id}
@@ -72,28 +76,33 @@ const ControlScreen = () => {
         />
       );
     } else {
-      return (
-        <ControlSlider deviceName={item.id} iconName={item.iconName} />
-      );
+      return <ControlSlider deviceName={item.id} iconName={item.iconName} />;
     }
   };
 
   return (
-    <FlatList style={styles.container}
+    <FlatList
+      style={styles.container}
       ListHeaderComponent={
         <>
-        <View style={styles.navbar}>
-            <TouchableOpacity style={{marginTop: 20}} onPress={() => navigation.goBack()} > 
-              <MaterialCommunityIcons name="arrow-left" size={30} color="#34291D" />
+          <View style={styles.navbar}>
+            <TouchableOpacity
+              style={{ marginTop: 20 }}
+              onPress={() => navigation.goBack()}
+            >
+              <MaterialCommunityIcons
+                name="arrow-left"
+                size={30}
+                color="#34291D"
+              />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>Controls</Text>
-        </View>
-            <View style={styles.header}>
-              <Text style={styles.greeting}>Good morning, Mr. Simith</Text>
-              <Text style={styles.greeting}>March 14, 2024</Text>
-              <Text style={styles.greeting}>7:10 AM</Text>
-            </View>
-          
+          </View>
+          <View style={styles.header}>
+            <Text style={styles.greeting}>Good morning, Mr. Simith</Text>
+            <Text style={styles.greeting}>March 14, 2024</Text>
+            <Text style={styles.greeting}>7:10 AM</Text>
+          </View>
         </>
       }
       data={[...DATA, ...data0]}
@@ -101,7 +110,6 @@ const ControlScreen = () => {
       keyExtractor={(item) => item.id}
       ListEmptyComponent={<Text>No device found</Text>}
     />
-    
   );
 };
 
