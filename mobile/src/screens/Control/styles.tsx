@@ -1,19 +1,29 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet,StatusBar } from "react-native";
 import { COLORS } from "../../constants";
 
 const styles = StyleSheet.create({
     container: {
         width: '100%',
         paddingHorizontal: 20,
-        backgroundColor: COLORS.mainBackground
+        backgroundColor: COLORS.mainBackground,
+        marginTop: StatusBar.currentHeight || 0,
     },
-    profileImage: {
-        width: 50,
-        height: 50,
-        position: 'absolute',
-        borderRadius: 25,
-        marginTop: 40,
-        right: 0
+    navbar:{
+        flexDirection: 'row'
+    },
+    header:{
+        marginTop: 25,
+        marginLeft: 10,
+    },
+    headerTitle:{
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginLeft: 5,
+        marginTop: 20,
+    },
+    greeting: {
+        color: COLORS.gray,
+        fontSize: 16,
     },
 })
 
