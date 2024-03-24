@@ -39,6 +39,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+    switch:{
+        justifyContent: 'space-between'
+    }
 })
 
 export default styles

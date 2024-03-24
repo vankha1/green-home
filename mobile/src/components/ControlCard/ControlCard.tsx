@@ -19,7 +19,7 @@ const ControlCard = ({deviceName,iconName,state}: ControlCardProps) => {
             <Text style={styles.dateModify}> 9PM, March 14th, 2024</Text>
           </View>
         </View>
-        <View>
+        <View style={styles.switch}>
             <ToggleSwitch deviceState={state}/>
         </View>
 
