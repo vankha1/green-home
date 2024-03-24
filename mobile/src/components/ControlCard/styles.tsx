@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     switch:{
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginTop: 5,
     }
 })
 

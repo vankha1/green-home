@@ -19,7 +19,7 @@ const ControlSlider = ({deviceName,iconName}: ControlSliderProps) => {
             <MaterialCommunityIcons name={iconName} size={50} color="#597166" />
         </View>
         <Slider
-            style={{width: 280, height: 20}}
+            style={{width: '100%', height: 20}}
             minimumValue={0.3}
             maximumValue={1}
             minimumTrackTintColor="#23B371"
