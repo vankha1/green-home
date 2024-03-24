@@ -13,6 +13,7 @@ import { COLORS, icons } from "../constants";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import ControlScreen from "../screens/Control/ControlScreen";
+import NotifyScreen from "../screens/Notification/NotifyScreen";
 const Tab = createBottomTabNavigator<AppTabParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -45,9 +46,13 @@ const HomeStackCmp = ({
 
 function TabNavigator() {
   return (
+    // name attribute of Tab.Screen here must match with AppTabParamList defined in natigator.tsx file
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {
+          height: 60,
+        }
       }}
     >
       <Tab.Screen
@@ -56,51 +61,75 @@ function TabNavigator() {
         options={{
           title: "Home",
           tabBarIcon: () => {
-            return <MaterialCommunityIcons name="home" size={30} />;
+            return <MaterialCommunityIcons name="home" size={27} />;
           },
           tabBarLabelStyle: {
-            fontSize: 15,
-            color: COLORS.secondary
+            fontSize: 13,
+            color: COLORS.secondary,
           },
           tabBarActiveBackgroundColor: COLORS.buttonBg,
         }}
       />
-      <Tab.Screen name="Control" component={ControlScreen} options={{
-          title: "Control",
-          tabBarIcon: () => {
-            return <MaterialCommunityIcons name="database" size={30} />;
-          },
-          tabBarLabelStyle: {
-            fontSize: 15,
-            color: COLORS.secondary
-          },
-          tabBarActiveBackgroundColor: COLORS.buttonBg,
-          tabBarActiveTintColor: COLORS.buttonBg,
-        }}/>
-      <Tab.Screen name="Statistic" component={StatisticScreen} options={{
+      <Tab.Screen
+        name="Statistic"
+        component={StatisticScreen}
+        options={{
           title: "Statistic",
           tabBarIcon: () => {
-            return <MaterialCommunityIcons name="chart-line" size={30} />;
+            return <MaterialCommunityIcons name="chart-line" size={27} />;
           },
           tabBarLabelStyle: {
-            fontSize: 15,
+            fontSize: 13,
+            color: COLORS.secondary,
+          },
+          tabBarActiveBackgroundColor: COLORS.buttonBg,
+          tabBarActiveTintColor: COLORS.buttonBg,
+        }}
+      />
+      <Tab.Screen
+        name="Control"
+        component={ControlScreen}
+        options={{
+          title: "Control",
+          tabBarIcon: () => {
+            return <MaterialCommunityIcons name="database" size={27} />;
+          },
+          tabBarLabelStyle: {
+            fontSize: 13,
+            color: COLORS.secondary,
+          },
+          tabBarActiveBackgroundColor: COLORS.buttonBg,
+          tabBarActiveTintColor: COLORS.buttonBg,
+        }}
+      />
+      <Tab.Screen name="Notification" component={NotifyScreen} options={{
+          title: "Notification",
+          tabBarIcon: () => {
+            return <MaterialCommunityIcons name="bell" size={27} />;
+          },
+          tabBarLabelStyle: {
+            fontSize: 13,
             color: COLORS.secondary
           },
           tabBarActiveBackgroundColor: COLORS.buttonBg,
           tabBarActiveTintColor: COLORS.buttonBg,
         }}/>
-      <Tab.Screen name="Setting" component={SettingScreen} options={{
+      <Tab.Screen
+        name="Setting"
+        component={SettingScreen}
+        options={{
           title: "Setting",
           tabBarIcon: () => {
-            return <MaterialCommunityIcons name="account" size={30} />;
+            return <MaterialCommunityIcons name="account" size={27} />;
           },
           tabBarLabelStyle: {
-            fontSize: 15,
-            color: COLORS.secondary
+            fontSize: 13,
+            color: COLORS.secondary,
           },
           tabBarActiveBackgroundColor: COLORS.buttonBg,
           tabBarActiveTintColor: COLORS.buttonBg,
-        }}/>
+        }}
+      />
     </Tab.Navigator>
   );
 }
