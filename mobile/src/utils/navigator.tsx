@@ -14,6 +14,7 @@ type AppTabParamList = {
     HomeStack: NavigatorScreenParams<HomeStackParamList>
     Setting: undefined
     Statistic: undefined
+    Control: undefined
 }
 
 export { AppTabParamList, HomeStackParamList }

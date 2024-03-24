@@ -12,6 +12,7 @@ import HomeScreen from "../screens/Home/HomeScreen";
 import { COLORS, icons } from "../constants";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+import ControlScreen from "../screens/Control/ControlScreen";
 const Tab = createBottomTabNavigator<AppTabParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -64,6 +65,18 @@ function TabNavigator() {
           tabBarActiveBackgroundColor: COLORS.buttonBg,
         }}
       />
+      <Tab.Screen name="Control" component={ControlScreen} options={{
+          title: "Control",
+          tabBarIcon: () => {
+            return <MaterialCommunityIcons name="database" size={30} />;
+          },
+          tabBarLabelStyle: {
+            fontSize: 15,
+            color: COLORS.secondary
+          },
+          tabBarActiveBackgroundColor: COLORS.buttonBg,
+          tabBarActiveTintColor: COLORS.buttonBg,
+        }}/>
       <Tab.Screen name="Statistic" component={StatisticScreen} options={{
           title: "Statistic",
           tabBarIcon: () => {
