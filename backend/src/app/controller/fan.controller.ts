@@ -14,15 +14,15 @@ class FanController implements Subscriber {
         this.socket.on('connect', () => {
             this.socket.emit('join controller room', this.name)
         })
-
+        // roopin216/feeds/fan
         this.socket.on(`client to ${this.name}`, (message) => {
-            mqttClient.sendMessage(ADAFRUIT_IO_FEEDS + topic, message)
+            mqttClient.sendMessage(ADAFRUIT_IO_FEEDS + topic, JSON.parse(message).command.toString())
         })
     }
 
     public update(context): void {
         this.socket.emit('transmission', context)
-
+        
         DeviceModel.deleteMany({ type: 'Fan' })
             .then(() => {
                 let model = new FanModel({

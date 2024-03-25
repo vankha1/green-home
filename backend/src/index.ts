@@ -17,21 +17,25 @@ const io = new Server(3000)
 db.connect()
 
 const mqttClient: MqttClient = new MqttClient()
+
+const controls = ['Led', 'Fan', 'Servo']
 const [
     temperature,
     humidity,
     light,
     fan,
     moisture,
-    waterpump,
+    led,
+    servo
 ] = [
-    'temperature',
-    'humidity',
-    'light',
-    'fan',
-    'moisture',
-    'waterpump',
-].map((item) => ({ feed: `GreenHouse-${item}`, name: `${item}Controller` }))
+    'Temperature',
+    'Humidity',
+    'Light',
+    'Fan',
+    'Moisture',
+    'Led',
+    'Servo',
+].map((item) => ({ feed: `${controls.some((e) => e === item) ? `${item}` : `overview.${item}`}`, name: `${item}Controller` }))
 
 const authController: AuthController = new AuthController()
 const temperatureController: Subscriber = new TemperatureController()
@@ -39,14 +43,14 @@ const humidityController: Subscriber = new HumidityController()
 const lightController: Subscriber = new LightController(mqttClient, light.feed)
 const fanController: Subscriber = new FanController(mqttClient, fan.feed)
 const moistureController: Subscriber = new MoistureController()
-const waterpumpController: Subscriber = new WaterpumpController(mqttClient, waterpump.feed)
+// const waterpumpController: Subscriber = new WaterpumpController(mqttClient, waterpump.feed)
 
 
 mqttClient.subscribe(moistureController, moisture.name)
 mqttClient.subscribeTopic(moisture.feed)
 
-mqttClient.subscribe(waterpumpController, waterpump.name)
-mqttClient.subscribeTopic(waterpump.feed)
+// mqttClient.subscribe(waterpumpController, waterpump.name)
+// mqttClient.subscribeTopic(waterpump.feed)
 
 mqttClient.subscribe(temperatureController, temperature.name)
 mqttClient.subscribeTopic(temperature.feed)

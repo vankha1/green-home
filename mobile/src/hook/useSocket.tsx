@@ -15,7 +15,7 @@ const useSocket = (socket: Socket) => {
 
   useEffect(() => {
     socket.on('connect', onConnect)
-    socket.on("authController to client", onLogin);
+    socket.on("authController to client", onLogin); // listen from controller through socket.emit from index.ts file in backend
 
     return () => {
       socket.off("authController to client", onLogin);

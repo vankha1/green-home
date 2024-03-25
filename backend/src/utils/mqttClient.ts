@@ -41,7 +41,7 @@ class MqttClient extends Publisher {
     }
 
     public sendMessage(topic: string, message: string): void {
-        this.client.publish(topic, message)
+        this.client.publish(topic, message) 
     }
 }
 
