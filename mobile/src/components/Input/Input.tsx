@@ -20,7 +20,7 @@ const Input = (props: InputProps) => {
         placeholder={props.placeholder}
         value={props.value}
         onChangeText={props.onChange}
-        secureTextEntry={isVisiblePassword}
+        secureTextEntry={!isVisiblePassword && props.password}
         style={[styles.input]}
       />
       {props.password ? (

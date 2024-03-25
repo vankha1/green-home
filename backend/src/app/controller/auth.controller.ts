@@ -9,7 +9,7 @@ class AuthController {
         this.socket = io('http://localhost:3000')
 
         this.socket.on('connect', () => {
-            this.socket.emit('join controller room', this.name)
+            this.socket.emit('join controller room', this.name) // emit controller name and it will be listened in index.ts where socket.join('controller name')
         })
 
         this.socket.on(`client to ${this.name}`, (message: string) => {

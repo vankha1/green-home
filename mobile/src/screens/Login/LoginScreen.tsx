@@ -1,30 +1,43 @@
+import { Image, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 import Input from "../../components/Input/Input";
 import styles from "./styles";
-import { Image, Text, View } from "react-native";
 import Button from "../../components/Button/Button";
 import { COLORS } from "../../constants/theme";
 import { icons } from "../../constants";
-import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { loginSelector } from "../../redux/selector";
+import socket from "../../utils/socket";
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const navigation = useNavigation();
 
-  const isLogin = true;
+  const { isLogin, invalidAccount } = useSelector(loginSelector);
 
-  // useEffect(() => {
-  //   if (isLogin) {
-  //     navigation.navigate("Home" as never);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (isLogin) {
+      navigation.navigate("HomeScreen" as never); // HomeScreen here must be the same as the name attribute in Stack.Screen in AuthNavigation.tsx
+    }
+  }, [isLogin]);
 
   const handleLogin = () => {
-    console.log("Checkhere", email, password);
-    navigation.navigate("HomeScreen" as never); // HomeScreen here must be the same as the name attribute in Stack.Screen in AuthNavigation.tsx
+    console.log("Checkhere", username, password);
+    setUsername("");
+    setPassword("");
+    let data = {
+      from: "client",
+      to: "authController",
+      data: {
+        username,
+        password,
+      },
+    };
+    socket.emit("transmission", data); // emit transmission and it'll be listened at index.ts file in backend
   };
 
   return (
@@ -42,7 +55,7 @@ const LoginScreen = () => {
       </View>
 
       <View style={styles.loginForm}>
-        <Input value={email} onChange={setEmail} placeholder={"Email"} />
+        <Input value={username} onChange={setUsername} placeholder={"Email"} />
         <Input
           value={password}
           onChange={setPassword}
@@ -50,6 +63,11 @@ const LoginScreen = () => {
           placeholder={"Password"}
         />
       </View>
+      {invalidAccount && (
+        <Text style={{ fontSize: 16, color: "red", fontWeight: "bold" }}>
+          Username or password is invalid
+        </Text>
+      )}
 
       <View style={styles.btnContainer}>
         <Text style={styles.startedText}>Get Started</Text>

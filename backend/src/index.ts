@@ -66,24 +66,25 @@ io.on('connection', (socket) => {
         socket.join(message)
     })
 
-    // socket.on('join client room', () => {
-    //     socket.join('client room')
+    socket.on('join client room', () => {
+        socket.join('client room')
 
-    //     io.in('client room')
-    //         .fetchSockets()
-    //         .then((sockets) => {
-    //             for (let socket of sockets) {
-    //                 console.log(socket.id)
-    //             }
-    //         })
-    // })
+        io.in('client room') // io.in: broadcast to all the sockets in the room
+            .fetchSockets()
+            .then((sockets) => {
+                for (let socket of sockets) {
+                    console.log("The socket id of client",socket.id)
+                }
+            })
+    })
 
-    // socket.on('transmission', (message) => {
-    //     const { from, to, data } = message
-    //     io.to(`${from === 'client' ? to : 'client room'}`).emit(
-    //         `${from} to ${to}`,
-    //         JSON.stringify(data)
-    //     )
-    //     console.log(`Message from ${from} to ${to}: ${JSON.stringify(data)}`)
-    // })
+    // this transmission is used to send messages from client to controller and also from controller back to client. If transmit from controller to client, it will emit 'nameOfController to client' and it'll be listened at useSocket.tsx 
+    socket.on('transmission', (message) => {
+        const { from, to, data } = message
+        io.to(`${from === 'client' ? to : 'client room'}`).emit(
+            `${from} to ${to}`,
+            JSON.stringify(data) // just a string
+        ) // if message is from client, io.to('name of controller which is joined room in line 66') and after that, emit 'client to controller name' with data and it'll be listened in this controller
+        console.log(`Message from ${from} to ${to}: ${JSON.stringify(data)}`)
+    })
 })
