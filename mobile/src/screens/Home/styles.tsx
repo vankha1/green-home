@@ -5,7 +5,8 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         paddingHorizontal: 20,
-        backgroundColor: COLORS.mainBackground
+        backgroundColor: COLORS.mainBackground,
+        marginBottom: 20,
     },
     profileImage: {
         width: 50,

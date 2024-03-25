@@ -1,31 +1,80 @@
-import {
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { COLORS } from "../../constants";
+import socket from "../../utils/socket";
 
 interface EnviromentCardProps {
+  nameSensor: string ;
+  nameDevice: string;
   bgColor: string;
   iconName: React.ComponentProps<typeof MaterialCommunityIcons>["name"];
 }
 
-const EnviromentCard = ({ bgColor, iconName }: EnviromentCardProps) => {
+const EnviromentCard = ({ nameSensor, nameDevice, bgColor, iconName }: EnviromentCardProps) => {
   const [state, setState] = useState<boolean>(false);
+  const [fanSpeed, setFanSpeed] = useState<number>(0);
+
+  const handleClickTemperature = (speed: number) => {
+    const data = {
+      from: "client",
+      to: "temperatureController",
+      data: {
+        status: state ? "on" : "off",
+        command: speed,
+      },
+    };
+    socket.emit("transmission", data);
+  };
+  const handleClickMoisture = (speed: number) => {
+    const data = {
+      from: "client",
+      to: "moistureController",
+      data: {
+        status: state ? "on" : "off",
+        command: speed,
+      },
+    };
+    socket.emit("transmission", data);
+  };
+  const handleClickLight = (speed: number) => {
+    const data = {
+      from: "client",
+      to: "lightController",
+      data: {
+        status: state ? "on" : "off",
+        command: speed,
+      },
+    };
+    socket.emit("transmission", data);
+  };
+  const handleClickHumidity = (speed: number) => {
+    const data = {
+      from: "client",
+      to: "humidityController",
+      data: {
+        status: state ? "on" : "off",
+        command: speed,
+      },
+    };
+    socket.emit("transmission", data);
+  };
+
+  // useEffect(() => {
+  //   handleClickFanPower(fanSpeed);
+  // }, [fanSpeed]);
 
   return (
     <View style={[styles.container, { backgroundColor: bgColor }]}>
       <View style={styles.info}>
-        <Text style={{ color: "#fff", fontSize: 16 }}>Temparature</Text>
-        <Text style={{ color: "#fff", fontSize: 48 }}>23</Text>
+        <Text style={{ color: "#fff", fontSize: 16 }}>{nameSensor}</Text>
+        <Text style={{ color: "#fff", fontSize: 48 }}>{fanSpeed}</Text>
         <Text style={{ color: "#fff", fontSize: 14 }}>{"\u00B0"}C</Text>
       </View>
       <View style={{ height: 100, width: 2, backgroundColor: "#FFFFFFB3" }} />
       <View style={styles.info}>
-        <Text style={{ color: "#fff", fontSize: 16 }}>Fan Speed</Text>
+        <Text style={{ color: "#fff", fontSize: 16 }}>{nameDevice}</Text>
         <View style={styles.line}>
           <MaterialCommunityIcons name="alert" size={16} color="white" />
           <Text style={{ color: "#fff", marginHorizontal: 5 }}>
@@ -34,7 +83,10 @@ const EnviromentCard = ({ bgColor, iconName }: EnviromentCardProps) => {
         </View>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => setState(!state)}
+          onPress={() => {
+            setState(!state)
+            setFanSpeed(prev => prev + 1)
+          }}
         >
           <View style={styles.line}>
             <MaterialCommunityIcons
@@ -49,7 +101,7 @@ const EnviromentCard = ({ bgColor, iconName }: EnviromentCardProps) => {
                 marginHorizontal: 7,
               }}
             >
-              {state ? "ON" : "OFF"}
+              ADJUST
             </Text>
           </View>
         </TouchableOpacity>
