@@ -18,7 +18,7 @@ const loginSlice = createSlice({
             state.isLogin = true
             state.invalidAccount = false
         },
-        logout: (state, action) => {
+        logout: (state) => {
             state.isLogin = false
         },
         invalidAccount: (state, action) => {

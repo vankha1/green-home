@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const connect = async () => {
     try {
         await mongoose.connect(
-            'mongodb+srv://vovankha:vovankha@cluster0.s2v3jvs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+            'mongodb+srv://vovankha:vovankha@cluster0.s2v3jvs.mongodb.net/green-house?retryWrites=true&w=majority&appName=Cluster0'
         )
         console.log('connect successfully!')
     } catch (err) {

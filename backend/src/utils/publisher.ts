@@ -18,6 +18,7 @@ class Publisher {
 
     public notify(context: string) {
         const data = JSON.parse(context)
+        // console.log("Check data", data)
         if (data.to === 'client') {
             this.subscribers[data.from].update(data)
         }

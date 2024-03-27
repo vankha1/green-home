@@ -20,7 +20,7 @@ class AuthController {
                 .then((doc) => {
                     if (!doc) {
                         status = false
-                    } else if (doc.password != password) {
+                    } else if (doc.password !== password) {
                         status = false
                     }
                 })

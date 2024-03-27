@@ -6,20 +6,25 @@ import { COLORS } from "../../constants";
 import socket from "../../utils/socket";
 
 interface EnviromentCardProps {
-  nameSensor: string ;
+  nameSensor: string;
   nameDevice: string;
   bgColor: string;
   iconName: React.ComponentProps<typeof MaterialCommunityIcons>["name"];
 }
 
-const EnviromentCard = ({ nameSensor, nameDevice, bgColor, iconName }: EnviromentCardProps) => {
+const EnviromentCard = ({
+  nameSensor,
+  nameDevice,
+  bgColor,
+  iconName,
+}: EnviromentCardProps) => {
   const [state, setState] = useState<boolean>(false);
   const [fanSpeed, setFanSpeed] = useState<number>(0);
 
   const handleClickTemperature = (speed: number) => {
     const data = {
       from: "client",
-      to: "temperatureController",
+      to: "fanController",
       data: {
         status: state ? "on" : "off",
         command: speed,
@@ -62,7 +67,7 @@ const EnviromentCard = ({ nameSensor, nameDevice, bgColor, iconName }: Enviromen
   };
 
   // useEffect(() => {
-  //   handleClickFanPower(fanSpeed);
+  //   handleClickTemperature(fanSpeed);
   // }, [fanSpeed]);
 
   return (
@@ -84,8 +89,8 @@ const EnviromentCard = ({ nameSensor, nameDevice, bgColor, iconName }: Enviromen
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            setState(!state)
-            setFanSpeed(prev => prev + 1)
+            setState(!state);
+            setFanSpeed((prev) => prev + 1);
           }}
         >
           <View style={styles.line}>
