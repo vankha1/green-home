@@ -1,9 +1,6 @@
 import {
   FlatList,
   Image,
-  ListRenderItem,
-  ScrollView,
-  View,
 } from "react-native";
 import styles from "./styles";
 import Header from "../../components/Header/Header";

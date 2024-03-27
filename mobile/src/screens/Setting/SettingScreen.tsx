@@ -4,9 +4,12 @@ import { Image, Pressable, Text, View } from "react-native";
 import styles from "./styles";
 import { COLORS } from "../../constants";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { logout } from "../../redux/slice/loginSlice";
+import { useDispatch } from "react-redux";
 
 const SettingScreen = () => {
   const [pressed, setPressed] = useState<boolean>(false);
+  const dispatch = useDispatch()
   const navigation = useNavigation();
 
   return (
@@ -34,8 +37,8 @@ const SettingScreen = () => {
         <Pressable
           onPress={() => {
             setPressed(!pressed);
-            // dispatch(updateLogout());
-            navigation.navigate("Login" as never); // string "Login" must be defined in the navigation. In this case, this navigation is AuthNavigation.tsx
+            dispatch(logout());
+            navigation.navigate("HomeScreen" as never); // string "Login" must be defined in the navigation. In this case, this navigation is AuthNavigation.tsx
           }}
         >
           <MaterialCommunityIcons
