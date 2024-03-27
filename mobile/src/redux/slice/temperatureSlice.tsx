@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export type Temperature = {
-    temperature: number
+    temperature: number,
+    temperatureList: number[],
 }
 
 const initValue: Temperature = {
     temperature: 25,
+    temperatureList: []
 }
 
 const temperatureSlice = createSlice({
@@ -17,9 +19,13 @@ const temperatureSlice = createSlice({
                 state.temperature = action.payload?.value
             }
         },
+        updateTemperatureArray: (state, action) => {
+            if (action.payload !== '') {
+                state.temperatureList.push(action.payload?.value)
+            }
+        }
     },
 })
 
-export const { updateTemperature } = temperatureSlice.actions
-
+export const { updateTemperature, updateTemperatureArray } = temperatureSlice.actions
 export default temperatureSlice
