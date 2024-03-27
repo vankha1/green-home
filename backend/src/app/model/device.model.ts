@@ -6,8 +6,8 @@ interface Device {
     updateTime: Date
 }
 
-interface Light {
-    status: boolean
+interface Luminosity {
+    value: number
 }
 
 interface Temperature {
@@ -36,11 +36,11 @@ const deviceSchema = new Schema<Device>(
 
 const DeviceModel = model('Device', deviceSchema)
 
-const LightModel = DeviceModel.discriminator(
-    'Light',
-    new Schema<Light>(
+const LuminosityModel = DeviceModel.discriminator(
+    'Luminosity',
+    new Schema<Luminosity>(
         {
-            status: { type: Boolean, required: true },
+            value: { type: Number, required: true },
         },
         options
     )
@@ -97,7 +97,7 @@ const WaterpumpModel = DeviceModel.discriminator(
 )
 export {
     DeviceModel,
-    LightModel,
+    LuminosityModel,
     TemperatureModel,
     HumidityModel,
     FanModel,

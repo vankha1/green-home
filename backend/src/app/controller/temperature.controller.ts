@@ -20,7 +20,7 @@ class TemperatureController implements Subscriber {
         DeviceModel.deleteMany({ type: 'Temperature' })
             .then(() => {
                 let model = new TemperatureModel({
-                    value: context.data.temperature,
+                    value: context.data.value,
                 })
                 model.save().then(() => console.log('database is updated')) // Success
             })

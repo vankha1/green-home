@@ -2,8 +2,6 @@ import { NavigatorScreenParams } from '@react-navigation/native'
 
 type HomeStackParamList = {
     HomeScreen: undefined
-    Notification: undefined
-    Login: undefined
 }
 
 type AppTabParamList = {

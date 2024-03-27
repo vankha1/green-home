@@ -7,32 +7,32 @@ import AuthController from './app/controller/auth.controller'
 import FanController from './app/controller/fan.controller'
 
 import HumidityController from './app/controller/humidity.controller'
-import LightController from './app/controller/light.controller'
 import MoistureController from './app/controller/moisture.controller'
 import TemperatureController from './app/controller/temperature.controller'
 import WaterpumpController from './app/controller/waterpump.controller'
 import Subscriber from './utils/subscriber'
+import LuminosityController from './app/controller/luminosity.controller'
 
 const io = new Server(3000)
 db.connect()
 
 const mqttClient: MqttClient = new MqttClient()
 
-const controls = ['Led', 'Fan', 'Servo']
+const controls = ['Led', 'fan', 'Servo']
 const [
     temperature,
     humidity,
-    light,
+    luminosity,
     fan,
     moisture,
     led,
     servo
 ] = [
-    'Temperature',
-    'Humidity',
-    'Light',
-    'Fan',
-    'Moisture',
+    'temperature',
+    'humidity',
+    'luminosity',
+    'fan',
+    'moisture',
     'Led',
     'Servo',
 ].map((item) => ({ feed: `${controls.some((e) => e === item) ? `${item}` : `overview.${item}`}`, name: `${item}Controller` }))
@@ -40,11 +40,10 @@ const [
 const authController: AuthController = new AuthController()
 const temperatureController: Subscriber = new TemperatureController()
 const humidityController: Subscriber = new HumidityController()
-const lightController: Subscriber = new LightController(mqttClient, light.feed)
+const luminosityController: Subscriber = new LuminosityController()
 const fanController: Subscriber = new FanController(mqttClient, fan.feed)
 const moistureController: Subscriber = new MoistureController()
 // const waterpumpController: Subscriber = new WaterpumpController(mqttClient, waterpump.feed)
-
 
 mqttClient.subscribe(moistureController, moisture.name)
 mqttClient.subscribeTopic(moisture.feed)
@@ -58,8 +57,8 @@ mqttClient.subscribeTopic(temperature.feed)
 mqttClient.subscribe(humidityController, humidity.name)
 mqttClient.subscribeTopic(humidity.feed)
 
-mqttClient.subscribe(lightController, light.name)
-mqttClient.subscribeTopic(light.feed)
+mqttClient.subscribe(luminosityController, luminosity.name)
+mqttClient.subscribeTopic('overview.light')
 
 mqttClient.subscribe(fanController, fan.name)
 mqttClient.subscribeTopic(fan.feed)

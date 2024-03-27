@@ -20,13 +20,15 @@ class FanController implements Subscriber {
         })
     }
 
-    public update(context): void {
+    public update(context: any): void {
+        // console.log('FanController:', context)
         this.socket.emit('transmission', context)
         
         DeviceModel.deleteMany({ type: 'Fan' })
             .then(() => {
                 let model = new FanModel({
                     status: context.data.status,
+                    speed: context.data.command
                 })
                 model.save().then(() => console.log('database is updated')) // Success
             })
