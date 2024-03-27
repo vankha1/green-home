@@ -16,10 +16,11 @@ class Publisher {
         return false
     }
 
-    public notify(context: string) {
-        const data = JSON.parse(context)
-        // console.log("Check data", data)
+    public notify(context: any): void {
+        // console.log("Check data", context)
+        const data = context
         if (data.to === 'client') {
+            // console.log("first", this.subscribers['fanController'])
             this.subscribers[data.from].update(data)
         }
     }

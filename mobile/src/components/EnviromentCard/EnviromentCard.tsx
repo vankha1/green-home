@@ -8,11 +8,13 @@ import socket from "../../utils/socket";
 interface EnviromentCardProps {
   nameSensor: string;
   nameDevice: string;
+  data: number;
   bgColor: string;
   iconName: React.ComponentProps<typeof MaterialCommunityIcons>["name"];
 }
 
 const EnviromentCard = ({
+  data,
   nameSensor,
   nameDevice,
   bgColor,
@@ -74,7 +76,7 @@ const EnviromentCard = ({
     <View style={[styles.container, { backgroundColor: bgColor }]}>
       <View style={styles.info}>
         <Text style={{ color: "#fff", fontSize: 16 }}>{nameSensor}</Text>
-        <Text style={{ color: "#fff", fontSize: 48 }}>{fanSpeed}</Text>
+        <Text style={{ color: "#fff", fontSize: 48 }}>{data}</Text>
         <Text style={{ color: "#fff", fontSize: 14 }}>{"\u00B0"}C</Text>
       </View>
       <View style={{ height: 100, width: 2, backgroundColor: "#FFFFFFB3" }} />

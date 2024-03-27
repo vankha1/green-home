@@ -14,13 +14,13 @@ class MoistureController implements Subscriber {
         })
     }
 
-    public update(context): void {
+    public update(context: any): void {
         this.socket.emit('transmission', context)
 
         DeviceModel.deleteMany({ type: 'Moisture' })
             .then(() => {
                 let model = new MoistureModel({
-                    value: context.data.moisture,
+                    value: context.data.value,
                 })
                 model.save().then(() => console.log('database is updated')) // Success
             })

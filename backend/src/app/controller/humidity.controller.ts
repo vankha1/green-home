@@ -20,7 +20,7 @@ class HumidityController implements Subscriber {
         DeviceModel.deleteMany({ type: 'Humidity' })
             .then(() => {
                 let model = new HumidityModel({
-                    value: context.data.humidity,
+                    value: context.data.value,
                 })
                 model.save().then(() => console.log('database is updated')) // Success
             })
