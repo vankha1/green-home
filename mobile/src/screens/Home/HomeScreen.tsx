@@ -1,13 +1,20 @@
-import {
-  FlatList,
-  Image,
-} from "react-native";
+import { FlatList, Image } from "react-native";
 import styles from "./styles";
 import Header from "../../components/Header/Header";
 import EnviromentCard from "../../components/EnviromentCard/EnviromentCard";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useSelector } from "react-redux";
-import { humiditySelector, luminositySelector, moistureSelector, temperatureSelector } from "../../redux/selector";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  humiditySelector,
+  luminositySelector,
+  moistureSelector,
+  temperatureSelector,
+} from "../../redux/selector";
+import { updateTemperatureArray } from "../../redux/slice/temperatureSlice";
+import { useEffect } from "react";
+import { updateMoistureArray } from "../../redux/slice/moistureSlice";
+import { updateLuminosityArray } from "../../redux/slice/luminositySlice";
+import { updateHumidityArray } from "../../redux/slice/humiditySlice";
 
 interface EnviromentCardType {
   id: string;
@@ -18,12 +25,16 @@ interface EnviromentCardType {
   data: number;
 }
 
+const temperatureArray: number[] = [];
+
 const HomeScreen = ({ navigation }: any) => {
-  const temperatureState = useSelector(temperatureSelector)
-  const moistureState = useSelector(moistureSelector)
-  const humidityState = useSelector(humiditySelector)
-  const luminosityState = useSelector(luminositySelector)
-  console.log(humidityState, luminosityState)
+  const temperatureState = useSelector(temperatureSelector);
+  const moistureState = useSelector(moistureSelector);
+  const humidityState = useSelector(humiditySelector);
+  const luminosityState = useSelector(luminositySelector);
+
+  const dispatch = useDispatch();
+
   const data: EnviromentCardType[] = [
     {
       id: "1",
@@ -39,7 +50,7 @@ const HomeScreen = ({ navigation }: any) => {
       nameDevice: "Water pump",
       bgColor: "#69bfca",
       iconName: "water-alert",
-      data: moistureState.moisture
+      data: moistureState.moisture,
     },
     {
       id: "3",
@@ -47,7 +58,7 @@ const HomeScreen = ({ navigation }: any) => {
       nameDevice: "Ceiling light",
       bgColor: "#dfd067",
       iconName: "ceiling-light",
-      data: luminosityState.luminosity
+      data: luminosityState.luminosity,
     },
     {
       id: "4",
@@ -55,9 +66,25 @@ const HomeScreen = ({ navigation }: any) => {
       nameDevice: "Fan Speed",
       bgColor: "#f5a890",
       iconName: "air-humidifier",
-      data: humidityState.humidity
+      data: humidityState.humidity,
     },
   ];
+
+  useEffect(() => {
+    dispatch(updateTemperatureArray({ value: temperatureState.temperature }));
+  }, [temperatureState.temperature]);
+
+  useEffect(() => {
+    dispatch(updateMoistureArray({ value: moistureState.moisture }));
+  }, [moistureState.moisture]);
+
+  useEffect(() => {
+    dispatch(updateLuminosityArray({ value: luminosityState.luminosity }));
+  }, [luminosityState.luminosity]);
+
+  useEffect(() => {
+    dispatch(updateHumidityArray({ value: humidityState.humidity }));
+  }, [humidityState.humidity]);
 
   return (
     <FlatList
@@ -74,7 +101,7 @@ const HomeScreen = ({ navigation }: any) => {
       data={data}
       renderItem={({ item }) => (
         <EnviromentCard
-          data = {item.data}
+          data={item.data}
           nameSensor={item.nameSensor}
           nameDevice={item.nameDevice}
           bgColor={item.bgColor}
@@ -85,4 +112,6 @@ const HomeScreen = ({ navigation }: any) => {
     />
   );
 };
+
+export const tempArrayChart = temperatureArray;
 export default HomeScreen;

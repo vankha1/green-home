@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export type Humidity = {
-    humidity: number
+    humidity: number,
+    humidityArray: number[],
 }
 
 const initValue: Humidity = {
     humidity: 25,
+    humidityArray: []
 }
 
 const humiditySlice = createSlice({
@@ -18,9 +20,14 @@ const humiditySlice = createSlice({
                 state.humidity = action.payload?.value
             }
         },
+        updateHumidityArray: (state, action) => {
+            if (action.payload !== '') {
+                state.humidityArray = [...state.humidityArray, action.payload?.value]
+            }
+        }
     },
 })
 
-export const { updateHumidity } = humiditySlice.actions
+export const { updateHumidity, updateHumidityArray } = humiditySlice.actions
 
 export default humiditySlice
