@@ -16,7 +16,7 @@ class WaterpumpController implements Subscriber {
         })
 
         this.socket.on(`client to ${this.name}`, (message) => {
-            mqttClient.sendMessage(ADAFRUIT_IO_FEEDS + topic, message)
+            mqttClient.sendMessage(ADAFRUIT_IO_FEEDS + topic, JSON.parse(message).command.toString())
         })
     }
 
@@ -26,7 +26,7 @@ class WaterpumpController implements Subscriber {
         DeviceModel.deleteMany({ type: 'Waterpump' })
             .then(() => {
                 let model = new WaterpumpModel({
-                    status: context.data.status,
+                    speed: context.data.value,
                 })
                 model.save().then(() => console.log('database is updated')) // Success
             })

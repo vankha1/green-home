@@ -1,12 +1,12 @@
 import { io, Socket } from 'socket.io-client'
-import { ADAFRUIT_IO_FEEDS } from '../../config/adafruit'
-import MqttClient from '../../utils/mqttClient'
 import Subscriber from '../../utils/subscriber'
-import { DeviceModel, FanModel } from '../model/device.model'
+import { DeviceModel, LedModel } from '../model/device.model'
+import MqttClient from '../../utils/mqttClient'
+import { ADAFRUIT_IO_FEEDS } from '../../config/adafruit'
 
-class FanController implements Subscriber {
+class LedController implements Subscriber {
     private socket: Socket
-    private name: String = 'fanController'
+    private name: String = 'ledController'
 
     constructor(mqttClient: MqttClient, topic: string) {
         this.socket = io('http://localhost:3000')
@@ -14,19 +14,19 @@ class FanController implements Subscriber {
         this.socket.on('connect', () => {
             this.socket.emit('join controller room', this.name)
         })
+
         this.socket.on(`client to ${this.name}`, (message) => {
-            mqttClient.sendMessage(ADAFRUIT_IO_FEEDS + topic, JSON.parse(message).command.toString())
+            mqttClient.sendMessage(ADAFRUIT_IO_FEEDS + topic, JSON.parse(message).status.toString())
         })
     }
 
-    public update(context: any): void {
-        // console.log('FanController:', context)
+    public update(context): void {
         this.socket.emit('transmission', context)
-        
-        DeviceModel.deleteMany({ type: 'Fan' })
+
+        DeviceModel.deleteMany({ type: 'Led' })
             .then(() => {
-                let model = new FanModel({
-                    speed: context.data.value
+                let model = new LedModel({
+                    status: context.data.value,
                 })
                 model.save().then(() => console.log('database is updated')) // Success
             })
@@ -40,4 +40,4 @@ class FanController implements Subscriber {
     }
 }
 
-export default FanController
+export default LedController

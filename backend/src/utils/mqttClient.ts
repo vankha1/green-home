@@ -34,8 +34,10 @@ class MqttClient extends Publisher {
   }
 
   public receiveMessage(): void {
+    // topic: roopin216/feeds/overview.temperature
     this.client.on("message", (topic: string, message) => {
-      const nameFeed = topic.substring(25);
+      const nameFeed = topic.includes('overview') ? topic.substring(25) : topic.substring(16); // temperature
+      console.log("Check name feed : ", nameFeed)
       const nameController =
         nameFeed === "light" ? "luminosityController" : nameFeed + "Controller";
 
@@ -52,7 +54,7 @@ class MqttClient extends Publisher {
   }
 
   public sendMessage(topic: string, message: string): void {
-    this.client.publish(topic, message);
+    this.client.publish(topic, message);// push adafruit
   }
 }
 

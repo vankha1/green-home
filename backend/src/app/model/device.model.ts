@@ -25,6 +25,10 @@ interface Moisture {
     value: number
 }
 interface Waterpump {
+    speed: number
+}
+
+interface Led {
     status: boolean
 }
 const deviceSchema = new Schema<Device>(
@@ -89,6 +93,17 @@ const WaterpumpModel = DeviceModel.discriminator(
     'Waterpump',
     new Schema<Waterpump>(
         {
+            speed: { type: Number, required: true },
+        },
+        options
+    )
+
+)
+
+const LedModel = DeviceModel.discriminator(
+    'Led',
+    new Schema<Led>(
+        {
             status: { type: Boolean, required: true },
         },
         options
@@ -103,4 +118,5 @@ export {
     FanModel,
     MoistureModel,
     WaterpumpModel,
+    LedModel
 }
