@@ -23,12 +23,6 @@ const NotifyScreen = (): JSX.Element => {
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Notifications</Text>
       </View>
-      <NotifyCard
-        type={'Warning'}
-        message={'everyone'}
-        id={1}
-        isRead={true}
-      />
       <ScrollView contentContainerStyle={styles.notify}>
         {list.length > 0 &&
           list.map((element: NotifyElement, i: number) => (

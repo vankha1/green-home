@@ -52,7 +52,7 @@ function TabNavigator() {
         headerShown: false,
         tabBarStyle: {
           height: 60,
-        }
+        },
       }}
     >
       <Tab.Screen
@@ -102,18 +102,26 @@ function TabNavigator() {
           tabBarActiveTintColor: COLORS.buttonBg,
         }}
       />
-      <Tab.Screen name="Notification" component={NotifyScreen} options={{
+      <Tab.Screen
+        name="Notification"
+        component={NotifyScreen}
+        options={{
           title: "Notification",
           tabBarIcon: () => {
-            return <MaterialCommunityIcons name="bell" size={27} />;
+            return (
+              <>
+                <MaterialCommunityIcons name="bell" size={27} />
+              </>
+            );
           },
           tabBarLabelStyle: {
             fontSize: 13,
-            color: COLORS.secondary
+            color: COLORS.secondary,
           },
           tabBarActiveBackgroundColor: COLORS.buttonBg,
           tabBarActiveTintColor: COLORS.buttonBg,
-        }}/>
+        }}
+      />
       <Tab.Screen
         name="Setting"
         component={SettingScreen}

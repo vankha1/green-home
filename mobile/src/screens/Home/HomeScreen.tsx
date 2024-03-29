@@ -15,6 +15,14 @@ import { useEffect } from "react";
 import { updateMoistureArray } from "../../redux/slice/moistureSlice";
 import { updateLuminosityArray } from "../../redux/slice/luminositySlice";
 import { updateHumidityArray } from "../../redux/slice/humiditySlice";
+import {
+  addNotify,
+  fanStatus,
+  luminosityStatus,
+  soilMoistureStatus,
+  temperatureStatus,
+} from "../../redux/slice/notifySlice";
+import useNotifications from "../../hook/useNotification";
 
 interface EnviromentCardType {
   id: string;
@@ -32,6 +40,8 @@ const HomeScreen = ({ navigation }: any) => {
   const moistureState = useSelector(moistureSelector);
   const humidityState = useSelector(humiditySelector);
   const luminosityState = useSelector(luminositySelector);
+
+  const { schedulePushNotification } = useNotifications();
 
   const dispatch = useDispatch();
 
@@ -71,18 +81,57 @@ const HomeScreen = ({ navigation }: any) => {
   ];
 
   useEffect(() => {
+    const sendNotify = async (title: string, message: string) => {
+      await schedulePushNotification(title, message);
+      dispatch(addNotify({ title, message }));
+    };
+
+    if (
+      temperatureState.temperature < 13 ||
+      temperatureState.temperature > 30
+    ) {
+      sendNotify("Warning", "Nhiệt độ vượt quá giới hạn !!!");
+      dispatch(temperatureStatus({ status: false }));
+    }
     dispatch(updateTemperatureArray({ value: temperatureState.temperature }));
   }, [temperatureState.temperature]);
 
   useEffect(() => {
+    const sendNotify = async (title: string, message: string) => {
+      await schedulePushNotification(title, message);
+      dispatch(addNotify({ title, message }));
+    };
+
+    if (moistureState.moisture < 13 || moistureState.moisture > 30) {
+      sendNotify("Warning", "Độ ẩm đất vượt quá giới hạn !!!");
+      dispatch(soilMoistureStatus({ status: false }));
+    }
     dispatch(updateMoistureArray({ value: moistureState.moisture }));
   }, [moistureState.moisture]);
 
   useEffect(() => {
+    const sendNotify = async (title: string, message: string) => {
+      await schedulePushNotification(title, message);
+      dispatch(addNotify({ title, message }));
+    };
+
+    if (luminosityState.luminosity < 13 || luminosityState.luminosity > 30) {
+      sendNotify("Warning", "Cường độ vượt quá giới hạn !!!");
+      dispatch(luminosityStatus({ status: false }));
+    }
     dispatch(updateLuminosityArray({ value: luminosityState.luminosity }));
   }, [luminosityState.luminosity]);
 
   useEffect(() => {
+    const sendNotify = async (title: string, message: string) => {
+      await schedulePushNotification(title, message);
+      dispatch(addNotify({ title, message }));
+    };
+
+    if (humidityState.humidity < 13 || humidityState.humidity > 30) {
+      sendNotify("Warning", "Tốc độ quạt vượt quá giới hạn !!!");
+      dispatch(fanStatus({ status: false }));
+    }
     dispatch(updateHumidityArray({ value: humidityState.humidity }));
   }, [humidityState.humidity]);
 
