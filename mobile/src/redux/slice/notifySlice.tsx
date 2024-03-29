@@ -73,6 +73,6 @@ const notifySlice = createSlice({
   },
 });
 
-export const { temperatureStatus, luminosityStatus, fanStatus, addNotify, removeNotify, setIsRead } = notifySlice.actions;
+export const { temperatureStatus, soilMoistureStatus, luminosityStatus, fanStatus, addNotify, removeNotify, setIsRead } = notifySlice.actions;
 
 export default notifySlice;

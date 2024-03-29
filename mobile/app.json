@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "42ddc65e-e2ae-4158-8197-7016c437252b"
+      }
+    },
+    "owner": "vovankha"
   }
 }

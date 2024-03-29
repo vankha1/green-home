@@ -21,33 +21,6 @@ const EnviromentCard = ({
   iconName,
 }: EnviromentCardProps) => {
   const [state, setState] = useState<boolean>(false);
-  const handleClickMoisture = (speed: number) => {
-    const data = {
-      from: "client",
-      to: "moistureController",
-      data: {
-        status: state ? "on" : "off",
-        command: speed,
-      },
-    };
-    socket.emit("transmission", data);
-  };
-  
-  const handleClickHumidity = (speed: number) => {
-    const data = {
-      from: "client",
-      to: "humidityController",
-      data: {
-        status: state ? "on" : "off",
-        command: speed,
-      },
-    };
-    socket.emit("transmission", data);
-  };
-
-  // useEffect(() => {
-  //   handleClickTemperature(fanSpeed);
-  // }, [fanSpeed]);
 
   return (
     <View style={[styles.container, { backgroundColor: bgColor }]}>
