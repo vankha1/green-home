@@ -12,13 +12,14 @@ import TemperatureController from './app/controller/temperature.controller'
 import WaterpumpController from './app/controller/waterpump.controller'
 import Subscriber from './utils/subscriber'
 import LuminosityController from './app/controller/luminosity.controller'
+import LedController from './app/controller/led.controller'
 
 const io = new Server(3000)
 db.connect()
 
 const mqttClient: MqttClient = new MqttClient()
 
-const controls = ['Led', 'fan', 'Servo']
+const controls = ['led', 'fan', 'servo']
 const [
     temperature,
     humidity,
@@ -33,8 +34,8 @@ const [
     'luminosity',
     'fan',
     'moisture',
-    'Led',
-    'Servo',
+    'led',
+    'servo'
 ].map((item) => ({ feed: `${controls.some((e) => e === item) ? `${item}` : `overview.${item}`}`, name: `${item}Controller` }))
 
 const authController: AuthController = new AuthController()
@@ -43,13 +44,11 @@ const humidityController: Subscriber = new HumidityController()
 const luminosityController: Subscriber = new LuminosityController()
 const fanController: Subscriber = new FanController(mqttClient, fan.feed)
 const moistureController: Subscriber = new MoistureController()
-// const waterpumpController: Subscriber = new WaterpumpController(mqttClient, waterpump.feed)
+const waterpumpController: Subscriber = new WaterpumpController(mqttClient, servo.feed)
+const ledController: Subscriber = new LedController(mqttClient, led.feed)
 
 mqttClient.subscribe(moistureController, moisture.name)
 mqttClient.subscribeTopic(moisture.feed)
-
-// mqttClient.subscribe(waterpumpController, waterpump.name)
-// mqttClient.subscribeTopic(waterpump.feed)
 
 mqttClient.subscribe(temperatureController, temperature.name)
 mqttClient.subscribeTopic(temperature.feed)
@@ -63,6 +62,11 @@ mqttClient.subscribeTopic('overview.light')
 mqttClient.subscribe(fanController, fan.name)
 mqttClient.subscribeTopic(fan.feed)
 
+mqttClient.subscribe(waterpumpController, servo.name)
+mqttClient.subscribeTopic(servo.feed)
+
+mqttClient.subscribe(ledController, led.name)
+mqttClient.subscribeTopic(led.feed)
 
 io.on('connection', (socket) => {
     socket.on('join controller room', (message) => {

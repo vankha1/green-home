@@ -6,6 +6,8 @@ import ControlCard from "../../components/ControlCard/ControlCard";
 import ControlSlider from "../../components/ControlSlider/ControlSlider";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import socket from "../../utils/socket";
+import { useState } from "react";
 interface ControlCardType {
   id: string;
   iconName: React.ComponentProps<typeof MaterialCommunityIcons>["name"];
@@ -14,54 +16,70 @@ interface ControlCardType {
 
 const DATA: ControlCardType[] = [
   {
-    id: "Lamp 1",
+    id: "Led",
     iconName: "lightbulb",
     state: true,
   },
-  {
-    id: "Lamp 2",
-    iconName: "lightbulb",
-    state: false,
-  },
-  {
-    id: "Lamp 3",
-    iconName: "lightbulb",
-    state: false,
-  },
-  /* {
-    id: "Lamp 4",
-    iconName: "lightbulb",
-    state: false,
-  },
-  {
-    id: "Lamp 5",
-    iconName: "lightbulb",
-    state: false,
-  }, */
 ];
 
 interface ControlSliderType {
   id: string;
   iconName: React.ComponentProps<typeof MaterialCommunityIcons>["name"];
+  onChange: (speed: number) => void;
 }
 
-const data0: ControlSliderType[] = [
-  {
-    id: "pump 1",
-    iconName: "water-pump",
-  },
-  {
-    id: "pump 2",
-    iconName: "water-pump",
-  },
-  {
-    id: "Fan system",
-    iconName: "fan",
-  },
-];
-
 const ControlScreen = () => {
+  const [state, setState] = useState<boolean>(false);
+  const [fanSpeed, setFanSpeed] = useState<number>(0);
+  const [waterPump, setWaterPump] = useState<number>(0);
   const navigation = useNavigation();
+
+  const handleClickLight = () => {
+    const data = {
+      from: "client",
+      to: "ledController",
+      data: {
+        status: state ? 0 : 1,
+      },
+    };
+    socket.emit("transmission", data);
+  };
+
+  const handleClickFan = (speed: number) => {
+    const data = {
+      from: "client",
+      to: "fanController",
+      data: {
+        command: speed,
+      },
+    };
+    socket.emit("transmission", data);
+  };
+
+  const handleClickWaterPump = (speed: number) => {
+    const data = {
+      from: "client",
+      to: "waterpumpController",
+      data: {
+        command: speed,
+      },
+    };
+    socket.emit("transmission", data);
+  };
+
+  const data0: ControlSliderType[] = [
+    {
+      id: "Pump",
+      iconName: "water-pump",
+      onChange: (speed: number) => handleClickWaterPump(speed),
+    },
+    {
+      id: "Fan",
+      iconName: "fan",
+      onChange: (speed: number) => handleClickFan(speed),
+    },
+  ];
+
   const renderItem = ({
     item,
   }: {
@@ -72,11 +90,22 @@ const ControlScreen = () => {
         <ControlCard
           deviceName={item.id}
           iconName={item.iconName}
-          state={item.state}
+          state={state}
+          onPress={() => {
+            setState((prev) => !prev);
+            handleClickLight();
+          }}
         />
       );
     } else {
-      return <ControlSlider deviceName={item.id} iconName={item.iconName} />;
+      return (
+        <ControlSlider
+          deviceName={item.id}
+          iconName={item.iconName}
+          value={fanSpeed}
+          onChange={item.onChange}
+        />
+      );
     }
   };
 
