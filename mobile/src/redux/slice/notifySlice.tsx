@@ -12,6 +12,7 @@ export type Notification = {
   luminosity: boolean;
   fan: boolean;
   list: [];
+  unreadCount :0,
 };
 
 const initValue = {
@@ -20,6 +21,7 @@ const initValue = {
   luminosity: false,
   fan: false,
   list: [],
+  unreadCount :0,
 };
 
 const notifySlice = createSlice({
@@ -55,6 +57,7 @@ const notifySlice = createSlice({
             }
 
             state.list.unshift(data as never)
+            state.unreadCount++;
         }
     },
     removeNotify: (state, action) => {
@@ -66,6 +69,7 @@ const notifySlice = createSlice({
         if (action.payload) {
             state.list.forEach((element : any, i) => {
                 if (i == action.payload.id) element.isRead = true
+                state.unreadCount--;
                 return element
             })
         }
