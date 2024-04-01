@@ -14,6 +14,10 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import ControlScreen from "../screens/Control/ControlScreen";
 import NotifyScreen from "../screens/Notification/NotifyScreen";
+
+import { useSelector } from "react-redux";
+import { unreadNotifySelector } from "../redux/selector";
+
 const Tab = createBottomTabNavigator<AppTabParamList>();
 const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
@@ -45,6 +49,7 @@ const HomeStackCmp = ({
 };
 
 function TabNavigator() {
+  const unreadNotifyCount = useSelector(unreadNotifySelector);
   return (
     // name attribute of Tab.Screen here must match with AppTabParamList defined in natigator.tsx file
     <Tab.Navigator
@@ -120,6 +125,7 @@ function TabNavigator() {
           },
           tabBarActiveBackgroundColor: COLORS.buttonBg,
           tabBarActiveTintColor: COLORS.buttonBg,
+          tabBarBadge: unreadNotifyCount > 0 ? unreadNotifyCount.toString() : undefined,
         }}
       />
       <Tab.Screen

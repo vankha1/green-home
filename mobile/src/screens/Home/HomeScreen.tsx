@@ -31,6 +31,9 @@ interface EnviromentCardType {
   bgColor: string;
   iconName: React.ComponentProps<typeof MaterialCommunityIcons>["name"];
   data: number;
+  measure: string;
+  lowerLimit: number;
+  upperLimit: number;
 }
 
 const temperatureArray: number[] = [];
@@ -53,6 +56,9 @@ const HomeScreen = ({ navigation }: any) => {
       bgColor: "#5fc698",
       iconName: "fan",
       data: temperatureState.temperature,
+      measure: "\u00B0C",
+      lowerLimit: 15,
+      upperLimit: 35,
     },
     {
       id: "2",
@@ -61,6 +67,9 @@ const HomeScreen = ({ navigation }: any) => {
       bgColor: "#69bfca",
       iconName: "water-alert",
       data: moistureState.moisture,
+      measure: "%",
+      lowerLimit: 45,
+      upperLimit: 85,
     },
     {
       id: "3",
@@ -69,6 +78,9 @@ const HomeScreen = ({ navigation }: any) => {
       bgColor: "#dfd067",
       iconName: "ceiling-light",
       data: luminosityState.luminosity,
+      measure: "LUX",
+      lowerLimit: 15,
+      upperLimit: 200,
     },
     {
       id: "4",
@@ -77,6 +89,9 @@ const HomeScreen = ({ navigation }: any) => {
       bgColor: "#f5a890",
       iconName: "air-humidifier",
       data: humidityState.humidity,
+      measure: "%",
+      lowerLimit: 20,
+      upperLimit: 80,
     },
   ];
 
@@ -88,7 +103,7 @@ const HomeScreen = ({ navigation }: any) => {
 
     if (
       temperatureState.temperature < 13 ||
-      temperatureState.temperature > 30
+      temperatureState.temperature > 35
     ) {
       sendNotify("Warning", "Nhiệt độ vượt quá giới hạn !!!");
       dispatch(temperatureStatus({ status: false }));
@@ -102,7 +117,7 @@ const HomeScreen = ({ navigation }: any) => {
       dispatch(addNotify({ title, message }));
     };
 
-    if (moistureState.moisture < 13 || moistureState.moisture > 30) {
+    if (moistureState.moisture < 45 || moistureState.moisture > 85) {
       sendNotify("Warning", "Độ ẩm đất vượt quá giới hạn !!!");
       dispatch(soilMoistureStatus({ status: false }));
     }
@@ -115,7 +130,7 @@ const HomeScreen = ({ navigation }: any) => {
       dispatch(addNotify({ title, message }));
     };
 
-    if (luminosityState.luminosity < 13 || luminosityState.luminosity > 30) {
+    if (luminosityState.luminosity < 15 || luminosityState.luminosity > 200) {
       sendNotify("Warning", "Cường độ vượt quá giới hạn !!!");
       dispatch(luminosityStatus({ status: false }));
     }
@@ -128,7 +143,7 @@ const HomeScreen = ({ navigation }: any) => {
       dispatch(addNotify({ title, message }));
     };
 
-    if (humidityState.humidity < 13 || humidityState.humidity > 30) {
+    if (humidityState.humidity < 20 || humidityState.humidity > 80) {
       sendNotify("Warning", "Tốc độ quạt vượt quá giới hạn !!!");
       dispatch(fanStatus({ status: false }));
     }
@@ -155,6 +170,9 @@ const HomeScreen = ({ navigation }: any) => {
           nameDevice={item.nameDevice}
           bgColor={item.bgColor}
           iconName={item.iconName}
+          measure={item.measure}
+          lowerLimit={item.lowerLimit}
+          upperLimit={item.upperLimit}
         />
       )}
       keyExtractor={(item) => item.id}

@@ -9,13 +9,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
         borderRadius: 10,
-        marginTop: 20
+        marginTop: 20,
     },
-    info: {
+    infoleft: {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: 4
+        gap: 4,
+        flex: 1,
+        paddingRight: 20,
+    }, 
+    inforight: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 4,
+        flex: 1,
+        paddingLeft: 20,
     }, 
     line: {
         flexDirection: 'row',
