@@ -3,6 +3,7 @@ import { Text, View, Image, StyleSheet } from "react-native";
 import styles from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
+import { useState } from "react";
 interface ControlSliderProps {
   deviceName: string;
   iconName: React.ComponentProps<typeof MaterialCommunityIcons>["name"];
@@ -11,6 +12,12 @@ interface ControlSliderProps {
 }
 
 const ControlSlider = ({ deviceName, iconName, value, onChange }: ControlSliderProps) => {
+  const [sliderValue, setSliderValue] = useState(value);
+
+  const handleSliderChange = (newValue: number) => {
+    setSliderValue(newValue);
+    onChange(newValue);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.topContent}>
@@ -27,9 +34,12 @@ const ControlSlider = ({ deviceName, iconName, value, onChange }: ControlSliderP
         minimumTrackTintColor="#23B371"
         maximumTrackTintColor="#000000"
         thumbTintColor="#47BDA6"
-        onValueChange={onChange}
-        value={value}
+        onValueChange={handleSliderChange}
+        value={sliderValue}
+        step={1}
       />
+      <Text style={{ textAlign: "center", fontSize: 13 }}>{Math.round(sliderValue)}</Text>
+
     </View>
   );
 };
